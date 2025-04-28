@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'PCD_DB1',
+        'NAME': 'PCD_DB5',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
            'host':'mongodb+srv://mohamedtligkraini:dNLPd8ZfquYAgPJ8@cluster0.nvqhcjr.mongodb.net/PythonDB?retryWrites=true&w=majority',
@@ -198,3 +198,5 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = "info@pcd_project.com"
 DOMAIN = env("DOMAIN")
 SITE_NAME = "Reunion Transcription"
+
+

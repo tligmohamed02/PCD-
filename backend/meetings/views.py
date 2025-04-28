@@ -45,4 +45,4 @@ def upload_audio(request):
         user_id=request.user.id  # Relier la réunion au user connecté
     )
 
-    return Response({'message': 'Fichier audio uploadé et réunion créée.', 'reunion_id': str(reunion.pk)})
+    return Response({'message': 'Fichier audio uploadé et réunion créée.', 'reunion_id': str(reunion.pk)}, status=201)

@@ -10,6 +10,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage"
 import ResetPasswordPageConfirm from "./pages/ResetPasswordPageConfirm";
 import ActivatePage from "./pages/ActivatePage";
 import NotFoundPage from "./pages/NotFoundPage";
+import MeetingUpload from "./components/MeetingUpload";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordPageConfirm />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/Upload" element={<MeetingUpload />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
