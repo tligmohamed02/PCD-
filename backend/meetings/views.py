@@ -46,3 +46,14 @@ def upload_audio(request):
     )
 
     return Response({'message': 'Fichier audio uploadé et réunion créée.', 'reunion_id': str(reunion.pk)}, status=201)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_reunions(request):
+    """
+    Retourne toutes les réunions de l'utilisateur connecté
+    """
+    user_id = str(request.user.id)  # Bien en string car stocké en CharField
+    reunions = Reunion.objects.filter(user_id=user_id).order_by('-date')  # Tri par date décroissante
+    serializer = ReunionSerializer(reunions, many=True)
+    return Response(serializer.data)
