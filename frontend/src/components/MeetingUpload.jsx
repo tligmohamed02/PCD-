@@ -15,7 +15,7 @@ export default function MeetingUpload() {
     formData.append('language', language);
 
     try {
-      const token = JSON.parse(localStorage.getItem('user'))?.access; // si tu stockes un token
+      const token = JSON.parse(localStorage.getItem('user'))?.access; 
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',

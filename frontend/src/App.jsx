@@ -25,7 +25,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordPageConfirm />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          {/* <Route path="/Upload" element={<MeetingUpload />} /> */}
+          <Route path="/Upload" element={<MeetingUpload />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
