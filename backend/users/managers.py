@@ -48,6 +48,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
+        extra_fields.setdefault("role", "admin")
 
         if extra_fields.get("is_superuser") is not True:
             raise ValueError(_("Superusers must have is_superuser=True"))

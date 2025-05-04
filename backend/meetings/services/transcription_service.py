@@ -7,30 +7,28 @@ import subprocess
 
 class TranscriptionService:
     def __init__(self, hf_token: str, whisper_model_size: str = "medium"):
-        # Authentification
+        
         login(hf_token)
         
-        # Chargement des modèles
         self.whisper_model = whisper.load_model(whisper_model_size)
         self.diarization_pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization-3.1")
 
     def convert_audio(self, input_path: str, output_path: str = "converted.wav") -> str:
-        # Conversion audio : 16kHz, mono, wav
         command = ["ffmpeg", "-y", "-i", input_path, "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", output_path]
         subprocess.run(command, check=True)
         return output_path
 
     def transcribe_with_speakers(self, audio_path: str) -> list:
-        # Convertir l'audio
+        
         wav_path = self.convert_audio(audio_path)
 
-        # Diarisation
+       
         diarization = self.diarization_pipeline(wav_path)
 
-        # Transcription
+        
         transcription_result = self.whisper_model.transcribe(wav_path, word_timestamps=True)
 
-        # Fusion des données
+        
         final_output = []
         for turn, _, speaker in diarization.itertracks(yield_label=True):
             start = turn.start

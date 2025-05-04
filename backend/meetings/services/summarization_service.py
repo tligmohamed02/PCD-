@@ -8,7 +8,14 @@ def summarize_text_with_ollama(text, model="llama3.1"):
     url = "http://localhost:11434/api/chat"
     payload = {
         "model": model,
-        "messages": [{"role": "user", "content": f"Résume ce texte : {text}"}]
+        "messages": [{
+                "role": "system",
+                "content": "Tu es un assistant intelligent chargé de résumer fidèlement les réunions de travail."
+            },
+            {
+                "role": "user",
+                "content": f"Voici le compte rendu brut d'une réunion de travail. Peux-tu en générer un résumé clair et structuré ?\n\n{text}"
+            }]
     }
 
     response = requests.post(url, json=payload, stream=True)

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jsPDF } from "jspdf";
+import MeetingUpload from './MeetingUpload';
 
 export default function UserMeetings() {
   const [meetings, setMeetings] = useState([]);
@@ -178,6 +179,7 @@ export default function UserMeetings() {
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-center">Mes Réunions</h2>
+      
 
       {meetings.length === 0 ? (
         <p className="text-center">Aucune réunion trouvée.</p>
@@ -195,20 +197,20 @@ export default function UserMeetings() {
               </audio>
 
               <div className="flex gap-4">
-                <a 
+                {/* <a 
                   href={`http://localhost:8000/${meeting.audio_file_path}`} 
                   download 
                   className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
                 >
                   Télécharger
-                </a>
-
-                <button 
+                </a> */}
+                
+                {/* <button 
                   onClick={() => handleDelete(meeting._id)}
                   className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
                 >
                   Supprimer
-                </button>
+                </button> */}
 
                 <button 
                   onClick={() => handleTranscribeAndSummarize(meeting._id)}
@@ -221,7 +223,7 @@ export default function UserMeetings() {
                   onClick={() => handleDownloadPDF(meeting._id)}
                   className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
                 >
-                  Télécharger Résumé (PDF)
+                  Télécharger PV (PDF)
                 </button>
 
               </div>

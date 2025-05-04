@@ -20,7 +20,7 @@ const Nav = () => {
 
     return (
         <nav className="navbar">
-            <NavLink className="logo" to="/">Logo</NavLink>
+            <NavLink className="logo" to="/">Home</NavLink>
             <ul className="nav-links">
                 {user ?
                     <>

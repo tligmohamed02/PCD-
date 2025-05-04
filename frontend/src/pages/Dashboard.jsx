@@ -10,11 +10,17 @@ const Dashboard = () => {
 
 
     return (
+        <>
         <div>
             <h1>Welcome, {userInfo.first_name} </h1>
+
             <UserMeetings1 />
         </div>
+       
+        </>
     )
 }
 
 export default Dashboard
+
+

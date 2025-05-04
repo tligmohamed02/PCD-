@@ -10,6 +10,7 @@ from .serializers import ReunionSerializer, TranscriptionSerializer, SummarySeri
 from django.shortcuts import get_object_or_404
 import datetime
 from bson import ObjectId
+from django.db import models
 
 class ReunionViewSet(viewsets.ModelViewSet):
     queryset = Reunion.objects.all()
@@ -40,47 +41,58 @@ def upload_audio(request):
     # Sauvegarder le fichier sur le disque
     file_path = save_audio_file(uploaded_file)
 
+    type_ = request.data.get('type', 'public')  # par défaut public
+
     reunion = Reunion.objects.create(
         title=title,
         date=datetime.datetime.now(),
         audio_file_path=file_path,
         language=language,
-        user_id=request.user.id # Relier la réunion au user connecté
+        user_id=request.user.id,
+        type=type_
     )
+
     return Response({'message': 'Fichier audio uploadé et réunion créée.', 'reunion_id': str(reunion.pk)}, status=201)
+
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_reunions(request):
-    """
-    Retourne toutes les réunions de l'utilisateur connecté
-    """
-    user_id = str(request.user.id)  # Bien en string car stocké en CharField
-    reunions = Reunion.objects.filter(user_id=user_id).order_by('-date')  # Tri par date décroissante
+    user = request.user
+
+    if user.role == 'admin':
+        # Admins/RH/CEO voient toutes les réunions
+        reunions = Reunion.objects.all().order_by('-date')
+    else:
+        # Employés voient seulement les réunions publiques 
+        reunions = Reunion.objects.filter(models.Q(type='public')).order_by('-date')
+
     serializer = ReunionSerializer(reunions, many=True)
     return Response(serializer.data)
 
-# Initialise ton service (à adapter selon ta logique d'injection de token)
+
+
 transcriber = TranscriptionService(hf_token="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")
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def transcribe_and_summarize(request, reunion_id):
-    # 1. Récupérer la réunion
+    
     reunion = get_object_or_404(Reunion, pk=ObjectId(reunion_id))
 
-    # 2. Transcription avec diarisation
+    
     try:
         diarized_transcript = transcriber.transcribe_with_speakers(reunion.audio_file_path)
     except Exception as e:
         return Response({'error': f'Erreur transcription: {str(e)}'}, status=500)
 
-    # 3. Format texte brut
+   
     full_text = "\n".join(
         [f"[{seg['speaker']} - {seg['start']}s→{seg['end']}s] {seg['text']}" for seg in diarized_transcript]
     )
 
-    # 4. Sauvegarder la transcription
+    
     transcription = Transcription.objects.create(
         meeting=reunion,
         text=full_text,
@@ -88,13 +100,13 @@ def transcribe_and_summarize(request, reunion_id):
         created_at=datetime.datetime.now()
     )
 
-    # 5. Résumé avec Ollama
+   
     try:
         summary_text = summarize_text_with_ollama(full_text)
     except Exception as e:
         return Response({'error': f'Erreur de summarization: {str(e)}'}, status=500)
 
-    # 6. Sauvegarder le résumé
+    
     summary = Summary.objects.create(
         meeting=reunion,
         summary_text=summary_text,
@@ -102,7 +114,7 @@ def transcribe_and_summarize(request, reunion_id):
     )
 
     return Response({
-        'message': '✅ Transcription et résumé enregistrés.',
+        'message': 'Transcription et résumé enregistrés.',
         'transcription_id': str(transcription.pk),
         'summary_id': str(summary.pk)
     })
