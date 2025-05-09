@@ -1,5 +1,0 @@
-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 hugging face
-
-dNLPd8ZfquYAgPJ8 Mongo
-
-mongodb+srv://mohamedtligkraini:dNLPd8ZfquYAgPJ8@cluster0.nvqhcjr.mongodb.net/
