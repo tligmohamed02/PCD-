@@ -1,14 +1,14 @@
-# backend/meetings/services/process_audio_meeting.py
-
 from datetime import datetime
+import os
 from .transcription_service import TranscriptionService
 from .summarization_service import summarize_text_with_ollama
 from ..models import Reunion, Transcription, Summary
 
 
 def process_meeting(file_path: str, title: str, language: str,reunion1 : Reunion):
-    
-    ts = TranscriptionService(hf_token="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")  # À sécuriser
+    HF_TOKEN = os.getenv('HF_TOKEN')
+
+    ts = TranscriptionService(HF_TOKEN)  
     segments = ts.transcribe_with_speakers(file_path)
 
     full_transcript = " ".join([seg["text"] for seg in segments])

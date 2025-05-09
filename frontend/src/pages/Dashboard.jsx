@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import MeetingUpload from '../components/MeetingUpload'
-import UserMeetings1 from '../components/UserMeetings1'
+import UserMeetings from '../components/UserMeetings'
+
 
 
 const Dashboard = () => {
@@ -11,12 +11,8 @@ const Dashboard = () => {
 
     return (
         <>
-        <div>
-            <h1>Welcome, {userInfo.first_name} </h1>
-
-            <UserMeetings1 />
-        </div>
-       
+            <UserMeetings />
+        
         </>
     )
 }

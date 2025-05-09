@@ -17,6 +17,7 @@ class ReunionViewSet(viewsets.ModelViewSet):
     serializer_class = ReunionSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
 class TranscriptionViewSet(viewsets.ModelViewSet):
     queryset = Transcription.objects.all()
     serializer_class = TranscriptionSerializer

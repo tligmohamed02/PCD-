@@ -11,14 +11,3 @@ def save_audio_file(uploaded_file, destination_folder="uploads"):
     return file_path
 
 
-# from djongo import models 
-
-# class AudioFile(models.Model):
-#     name = models.CharField(max_length=255)
-#     file = models.BinaryField()
-#     uploaded_at = models.DateTimeField(auto_now_add=True)
-
-# def save_audio_to_mongodb(uploaded_file):
-#     audio = AudioFile(name=uploaded_file.name, file=uploaded_file.read())
-#     audio.save()
-#     return audio.id

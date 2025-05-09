@@ -1,7 +1,7 @@
 from djongo import models
 from django.contrib.auth import get_user_model
 
-User = get_user_model()  # Utilisez votre modèle d'utilisateur personnalisé si nécessaire
+User = get_user_model() 
 
 class Reunion(models.Model):
     _id = models.ObjectIdField(primary_key=True)  # Clé primaire MongoDB

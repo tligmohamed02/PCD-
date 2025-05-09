@@ -15,13 +15,13 @@
 }
 
 :root {
-  --color-bg: #1f1f38;
-  --color-bg-variant: #28284f;
-  --color-primary: #007bff;
+  --color-bg: #006d77 ;
+  --color-bg-variant: #83c5be ;
+  --color-primary:#83c5be  ; 
   /* Blue */
-  --color-primary-variant: #0056b3;
+  --color-primary-variant:#edf6f9 ;
   /* Darker Blue */
-  --color-accent: #ff4500;
+  --color-accent: #FF9800 ;
   /* Orange-Red */
   --color-accent-variant: #cc3700;
   /* Darker Orange-Red */

@@ -41,7 +41,9 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (isError) {
-            toast.error(message)
+            //toast.error(message)
+            toast.error("Login failed")
+            window.alert("Adresse e-mail ou mot de passe incorrect. Veuillez réessayer")
         }
 
         if (isSuccess || user) {
@@ -56,63 +58,33 @@ const LoginPage = () => {
 
 
     return (
-        <>
-          <div className=" flex items-center justify-center bg-gray-50 px-4">
-            <form
-              onSubmit={handleSubmit}
-              className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md space-y-6"
-            >
-              <h2 className="text-3xl font-semibold text-center text-gray-800 flex items-center justify-center gap-2 ">
-                Login <BiLogInCircle />
-              </h2>
-    
-              {isLoading && <Spinner />}
-    
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
+      <>
+      <div className="container auth__container">
+          <h1 className="main__title">Login <BiLogInCircle /></h1>
+
+          {isLoading && <Spinner />}
+
+          <form className="auth__form">
+              <input type="text"
+                  placeholder="email"
                   name="email"
-                  placeholder="Entrer votre email"
+                  onChange={handleChange}
                   value={email}
-                  onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-                />
-              </div>
-    
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Mot de passe
-                </label>
-                <input
-                  type="password"
+              />
+              <input type="password"
+                  placeholder="password"
                   name="password"
-                  placeholder="********"
-                  value={password}
                   onChange={handleChange}
+                  value={password}
                   required
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-                />
-              </div>
-    
-              <div className="text-center text-sm">
-                <Link to="/reset-password" className="text-blue-600 hover:underline">
-                  Mot de passe oublié ?
-                </Link>
-              </div>
-    
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors font-semibold"
-              >
-                Se connecter
-              </button>
-            </form>
-          </div>
-        </>
+              />
+              <Link to="/reset-password">Forget Password ?</Link>
+
+              <button className="btn btn-primary" type="submit" onClick={handleSubmit}>Login</button>
+          </form>
+      </div>
+  </>
       )
     }
 
